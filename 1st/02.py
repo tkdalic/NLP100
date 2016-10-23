@@ -7,6 +7,6 @@ if __name__ == '__main__':
     ans = ''
 
     for i, v in enumerate(str1):
-        ans += v + str2[i]
+        ans = v + str2[0]
 
     print(ans)
