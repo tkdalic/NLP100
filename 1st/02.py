@@ -6,7 +6,6 @@ if __name__ == '__main__':
     str2 = 'タクシー'
     ans = ''
 
-    for i, v in enumerate(str1):
-        ans = v + str2[0]
-
+    for a, b in zip(str1, str2):
+        ans += a + b
     print(ans)
