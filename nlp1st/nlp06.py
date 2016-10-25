@@ -1,20 +1,7 @@
 #!/Users/rikutakada/.pyenv/shims python
 # -*- coding: utf-8 -*-
 
-
-def ngram(str, num):
-    ans = [''] * (len(str) + int(num))
-    k = -1
-    for v in str:
-        k += 1
-        for i in range(0, int(num)):
-            ans[k + i] += v
-
-    for i in range(0, int(num) - 1):
-        ans.pop(0)
-
-    return ans
-
+from nlp05.nlp05 import ngram
 
 if __name__ == '__main__':
     str1 = "paraparaparadise"
