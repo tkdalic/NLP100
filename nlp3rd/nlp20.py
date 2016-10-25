@@ -13,4 +13,4 @@ def articler(filename, key, value):
 
 if __name__ == '__main__':
     jsons = articler('jawiki-country.json', 'title', 'イギリス')
-    print(json.loads(jsons))
+    print(json.loads(jsons)['text'])
