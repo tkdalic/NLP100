@@ -3,7 +3,7 @@
 
 if __name__ == '__main__':
     str = "Hi He Lied Because Boron Could Not Oxidize Fluorine. New Nations Might Also Sign Peace Security Clause. Arthur King Can."
-    num = [1, 5, 6, 7, 8, 9, 15, 16, 19, 0]
+    num = [1, 5, 6, 7, 8, 9, 15, 16, 19, -1]
     anlis = []
     ans = {}
     for k in range(0, len(num)):
