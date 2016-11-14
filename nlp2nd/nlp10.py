@@ -1,5 +1,6 @@
 #!/Users/rikutakada/.pyenv/shims python
 # -*- coding: utf-8 -*-
+import sys
 
 
 def wc(filename):
@@ -7,4 +8,4 @@ def wc(filename):
 
 
 if __name__ == '__main__':
-    print(wc('hightemp.txt'))
+    print(wc(sys.argv[1]))

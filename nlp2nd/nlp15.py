@@ -5,16 +5,19 @@ import sys
 import nlp10
 
 
-if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        num = int(sys.argv[1])
-        num -= nlp10.wc('hightemp.txt')
-    else:
-        num = 0
+def tail(filename, num):
 
-    f = open('hightemp.txt', 'r', encoding='utf-8')
+    num -= nlp10.wc('hightemp.txt')
+
+    f = open(filename, 'r', encoding='utf-8')
 
     for v in f.readlines():
         if num >= 0:
-            print(v.strip())
+            print(v.rstrip('\n'))
         num += 1
+
+
+if __name__ == '__main__':
+    tail(sys.argv[1], int(sys.argv[2]))
+
+# diff <(python nlp15.py hightemp.txt 5) <(tail -n 5 hightemp.txt)

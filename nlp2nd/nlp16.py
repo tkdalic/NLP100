@@ -5,15 +5,13 @@ import sys
 import nlp10
 
 
-if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        split = int(sys.argv[1])
-        num = int(nlp10.wc('hightemp.txt') / split)
-        shou = nlp10.wc('hightemp.txt') % split
-    else:
-        split = 1
-        num = nlp10.wc('hightemp.txt')
-        shou = 0
+def sprit(filename, split):
+
+    num = int(nlp10.wc() / split)
+    shou = nlp10.wc('hightemp.txt') % split
+    split = 1
+    num = nlp10.wc('hightemp.txt')
+    shou = 0
 
     r = open('hightemp.txt', 'r', encoding='utf-8')
 
@@ -24,3 +22,7 @@ if __name__ == '__main__':
         if shou != 0:
             shou -= 1
             w.write(r.readline())
+
+
+if __name__ == '__main__':
+    sprit(sys.argv[1], sys.argv[2])

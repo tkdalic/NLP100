@@ -1,15 +1,12 @@
 #!/Users/rikutakada/.pyenv/shims python
 # -*- coding: utf-8 -*-
-
-from collections import defaultdict
+import sys
+from operator import itemgetter
 
 if __name__ == '__main__':
-    r = open('hightemp.txt', 'r', encoding='utf-8')
 
-    ans = defaultdict(list)
+    ans = [v.split()
+           for v in open(sys.argv[1], 'r', encoding='utf-8').readlines()]
 
-    for v in r.readlines():
-        ans[v.split()[2]] = v.split()
-
-    for k, v in sorted(ans.items()):
+    for v in sorted(ans, key=itemgetter(2), reverse=True):
         print('\t'.join(v))
