@@ -10,12 +10,12 @@ def diff(filename):
         words = row.split('\t')
         lists.append(words[0])
 
-    return set(lists)
+    return sorted(set(lists))
 
 
 if __name__ == '__main__':
     for v in diff(sys.argv[1]):
         print(v)
 
-# cut -f1 hightemp.txt|sort|uniq
+# cut -f1 hightemp.txt|LC_ALL=C sort -d|uniq
 # python nlp17.py hightemp.txt

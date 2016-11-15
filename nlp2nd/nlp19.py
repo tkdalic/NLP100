@@ -11,4 +11,6 @@ if __name__ == '__main__':
     for v in r.readlines():
         ans[v.split()[0]] += 1
     for k, v in sorted(ans.items(), key=lambda x: x[1], reverse=True):
-        print(k)
+        print(v, k)
+
+# cut -f 1 hightemp.txt | sort | uniq -c | sort -r
