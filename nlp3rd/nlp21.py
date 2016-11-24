@@ -6,16 +6,10 @@ from nlp20 import articler
 
 def categorier(filename, key, value):
     jsons = articler(filename, key, value)
-    category = []
-    for v in json.loads(jsons)['text'].split('\n'):
-        if v.find('Category') > 0:
-            category.append(v)
 
-    return category
+    return [v for v in json.loads(jsons)['text'].split('\n') if v.find('Category') > 0]
 
 
 if __name__ == '__main__':
-    category = categorier('jawiki-country.json', 'title', 'イギリス')
-
-    for v in category:
+    for v in categorier('jawiki-country.json', 'title', 'イギリス'):
         print(v)

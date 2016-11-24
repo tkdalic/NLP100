@@ -1,25 +1,19 @@
 #!/Users/rikutakada/.pyenv/shims python
 # -*- coding: utf-8 -*-
-import re
+# import re
 import json
 from nlp20 import articler
 
 
 def infobox():
     jsons = articler('jawiki-country.json', 'title', 'イギリス')
-    ans = {}
-    flag = False
-    start = re.compile("{{基礎情報")
-    end = re.compile("}}")
-    for v in json.loads(jsons)['text'].split('\n'):
-        if start.search(v):
-            flag = True
-        if flag:
-            if v.find('=') != -1:
-                spliter = v.lstrip('*|').split('=', 1)
-                ans[spliter[0].strip()] = spliter[1].strip()
-            if end.match(v):
-                return ans
+#    ans = {}
+#    end = re.compile("}}")
+#    for v in
+    return {v.lstrip('*|').split('=', 1)[0].strip(): v.lstrip('*|').split('=', 1)[1].strip()
+            for v in json.loads(jsons)['text']
+            .split('{{基礎情報', 1)[1].split('\n}}\n', 1)[0].split('\n')
+            if v.find('=') != -1}
 
 
 if __name__ == '__main__':

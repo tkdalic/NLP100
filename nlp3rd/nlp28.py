@@ -5,15 +5,10 @@ import re
 
 
 def infobox4():
-    ans = infobox3()
-    ans2 = {}
-    for k, v in ans.items():
-        ans2[k] = re.sub('\[|\]|\{|\}', '', v)
-    return ans2
+    return{k: re.sub('\[|\]|\{|\}', '', v) for k, v in infobox3().items()}
 
 
 if __name__ == '__main__':
-    ans = infobox4()
 
-    for k, v in ans.items():
+    for k, v in infobox4().items():
         print(k, v)

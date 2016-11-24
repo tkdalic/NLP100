@@ -4,15 +4,9 @@ from nlp25 import infobox
 
 
 def infobox2():
-    ans = infobox()
-    ans2 = {}
-    for k, v in ans.items():
-        ans2[k.replace("'", '')] = v.replace("'", '')
-    return ans2
+    return {k: v.replace("'", '') for k, v in infobox().items()}
 
 
 if __name__ == '__main__':
-    ans = infobox2()
-
-    for k, v in ans.items():
+    for k, v in infobox2().items():
         print(k, v)

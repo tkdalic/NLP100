@@ -14,5 +14,8 @@ if __name__ == '__main__':
             appen = a.search(v).group().lstrip(
                 'File:').lstrip('ファイル:')
             ans.append(appen)
-    for k in ans:
+    for k in [a.search(v).group().lstrip('File:').lstrip('ファイル:')
+              for v in json.loads(jsons)['text'].split('\n')
+              if re.compile("(File|ファイル):.*\.(jpg|JPG|png|PNG|JPEG|jpeg|svg)")
+              .search(v)]:
         print(k)

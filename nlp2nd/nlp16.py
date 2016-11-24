@@ -9,9 +9,7 @@ def sprit(filename, split):
 
     num = int(nlp10.wc() / split)
     shou = nlp10.wc('hightemp.txt') % split
-    split = 1
     num = nlp10.wc('hightemp.txt')
-    shou = 0
 
     r = open('hightemp.txt', 'r', encoding='utf-8')
 
