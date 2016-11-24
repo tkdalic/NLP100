@@ -14,7 +14,7 @@ if __name__ == '__main__':
     for v in mecablist:
         ans[v['surface']] += 1
 
-    for k, v in sorted(ans.items(), key=lambda k: k[1], reverse=True):
+    for k, v in sorted(ans.items(), key=lambda k: (k[1], k), reverse=True):
         print(k, v / total)
 #        confirm += v / total
 
