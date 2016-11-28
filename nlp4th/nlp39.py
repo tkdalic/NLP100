@@ -16,14 +16,14 @@ if __name__ == '__main__':
     for v in mecablist:
         occur[v['surface']] += 1
 
-    for k, v in enumerate(sorted(occur.values())):
+    for k, v in enumerate(sorted(occur.values(), reverse=True)):
         left.append(k)
         height.append(v / total)
-
-    for k, v in zip(left, height):
-        print(k, v)
 
     plt.plot(np.array(left), np.array(height))
     plt.xscale('log')
     plt.yscale('log')
+    plt.title('nlp39.py')
+    plt.xlabel('出現頻度順位')
+    plt.ylabel('出現頻度')
     plt.show()

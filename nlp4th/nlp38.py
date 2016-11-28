@@ -17,15 +17,8 @@ if __name__ == '__main__':
     for v in mecablist:
         occur[v['surface']] += 1
 
-    for v in occur.values():
-        freq[v % 200] += 1
-
-    for k, v in sorted(freq.items()):
-        left.append(k)
-        height.append(v / total)
-
-    for k, v in zip(left, height):
-        print(k, v)
-
-    plt.bar(np.array(left), np.array(height))
+    plt.hist(np.array([k for k in sorted(occur.values())]) / total, bins=14)
+    plt.title('nlp38.py')
+    plt.xlabel('出現頻度')
+    plt.ylabel('種類数')
     plt.show()
