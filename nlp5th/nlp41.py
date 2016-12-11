@@ -1,6 +1,7 @@
 #!/Users/rikutakada/.pyenv/shims python
 # -*- coding: utf-8 -*-
 import re
+import pandas as pd
 from Morth import Morph
 from Chunk import Chunk
 
@@ -26,8 +27,7 @@ def chunks_list(filename):
             if row == 'EOS\n':
                 for k, v in relation:
                     chunks[int(k)].src.append(int(v))
-                if chunks != []:
-                    sentences.append(chunks)
+                sentences.append(chunks)
                 relation = []
                 chunks = []
 
@@ -35,7 +35,6 @@ def chunks_list(filename):
 
 
 if __name__ == '__main__':
-    for chunk in chunks_list('neko.txt.cabocha')[7]:
-        for morph in chunk.morphs:
-            print(morph.surface, morph.base, morph.pos, morph.pos1)
-        print(chunk.dst, chunk.src)
+    print(pd.DataFrame([[''.join([morph.surface for morph in chunk.morphs]), chunk.dst]
+                        for chunk in chunks_list('neko.txt.cabocha')[7]],
+                       columns=['文節', '係り先']))
