@@ -7,4 +7,4 @@ class Chunk:
     def __init__(self, morphs, dst, srcs):
         self.morphs = morphs
         self.dst = dst
-        self.src = srcs
+        self.srcs = srcs

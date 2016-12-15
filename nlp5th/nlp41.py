@@ -26,7 +26,7 @@ def chunks_list(filename):
 
             if row == 'EOS\n':
                 for k, v in relation:
-                    chunks[int(k)].src.append(int(v))
+                    chunks[int(k)].srcs.append(int(v))
                 sentences.append(chunks)
                 relation = []
                 chunks = []

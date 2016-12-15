@@ -9,9 +9,6 @@ import matplotlib.pyplot as plt
 if __name__ == '__main__':
     mecablist = mecab_list('neko.txt.mecab')
     occur = defaultdict(int)
-    freq = defaultdict(int)
-    left = []
-    height = []
     total = len(mecablist)
 
     for v in mecablist:
