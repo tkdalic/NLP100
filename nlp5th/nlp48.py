@@ -18,4 +18,5 @@ if __name__ == '__main__':
                     pas.append(
                         ''.join([v.surface for v in chunks[dst].morphs]))
                     dst = int(chunks[dst].dst)
-                print(' -> '.join(pas))
+                if len(pas) > 1:
+                    print(' -> '.join(pas))

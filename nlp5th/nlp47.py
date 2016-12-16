@@ -14,8 +14,7 @@ if __name__ == '__main__':
             if len(chunk.morphs) > 1 and chunk.morphs[-2].pos1 == 'サ変接続'and chunk.morphs[-1].base == 'を' and chunk.dst != '-1' and '動詞' == chunks[int(chunk.dst)].morphs[0].pos:
                 noun = [
                     morph.base for morph in chunk.morphs if morph.pos1 == 'サ変接続'][-1]
-                verb = [morph.base for morph in chunks[
-                    int(chunk.dst)].morphs if morph.pos == '動詞'][0]
+                verb = chunks[int(chunk.dst)].morphs[0].base
                 case = []
                 case_chunk = []
                 for k in sorted([[chunks[src].morphs[-1].surface, ''.join([morph.surface for morph in chunks[src].morphs])]
