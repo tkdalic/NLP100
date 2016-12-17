@@ -41,6 +41,7 @@ if __name__ == '__main__':
         noun_list = [chunk for chunk in chunks if '名詞' in {
             v.pos for v in chunk.morphs}]
         has_rel = set()
+        least_list = []
         for xnoun in noun_list:
             for ynoun in noun_list[noun_list.index(xnoun) + 1:]:
                 for relation in [v for v in relations if xnoun not in v]:
@@ -59,7 +60,12 @@ if __name__ == '__main__':
                                 else:
                                     Y = word(ynoun, 'Y') + ' -> ' + ' -> '.join([''.join([v2.surface for v2 in v.morphs]) for v in relation[
                                         relation.index(ynoun) + 1:relation.index(rel_ele)]])
-                                print(
+                                least_list.append(
                                     ' | '.join([X, Y, ''.join([v.surface for v in rel_ele.morphs])]))
                                 break
                         break
+        if len(least_list) > 0:
+            leas = min({v.count(' -> ') for v in least_list})
+            for v in least_list:
+                if v.count(' -> ') == leas:
+                    print(v)
