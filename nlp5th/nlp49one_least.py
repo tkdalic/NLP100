@@ -44,22 +44,22 @@ if __name__ == '__main__':
         least_list = []
         for xnoun in noun_list:
             for ynoun in noun_list[noun_list.index(xnoun) + 1:]:
-                for relation in [v for v in relations if xnoun not in v]:
-                    if ynoun in relation and (xnoun, ynoun) not in has_rel:
+                for relation in [v for v in relations if ynoun not in v]:
+                    if xnoun in relation and (xnoun, ynoun) not in has_rel:
                         has_rel.add((xnoun, ynoun))
-                        relation2 = [v for v in relations if xnoun in v][0]
+                        relation2 = [v for v in relations if ynoun in v][0]
                         for rel_ele in relation:
                             if rel_ele in relation2:
-                                if relation2.index(rel_ele) - relation2.index(xnoun) <= 1:
+                                if relation.index(rel_ele) - relation.index(xnoun) <= 1:
                                     X = word(xnoun, 'X')
                                 else:
-                                    X = word(xnoun, 'X') + ' -> ' + ' -> '.join([''.join([v2.surface for v2 in v.morphs]) for v in relation2[
-                                        relation2.index(xnoun) + 1:relation2.index(rel_ele)]])
-                                if relation.index(rel_ele) - relation.index(ynoun) <= 1:
+                                    X = word(xnoun, 'X') + ' -> ' + ' -> '.join([''.join([v2.surface for v2 in v.morphs]) for v in relation[
+                                        relation.index(xnoun) + 1:relation.index(rel_ele)]])
+                                if relation2.index(rel_ele) - relation2.index(ynoun) <= 1:
                                     Y = word(ynoun, 'Y')
                                 else:
-                                    Y = word(ynoun, 'Y') + ' -> ' + ' -> '.join([''.join([v2.surface for v2 in v.morphs]) for v in relation[
-                                        relation.index(ynoun) + 1:relation.index(rel_ele)]])
+                                    Y = word(ynoun, 'Y') + ' -> ' + ' -> '.join([''.join([v2.surface for v2 in v.morphs]) for v in relation2[
+                                        relation2.index(ynoun) + 1:relation2.index(rel_ele)]])
                                 least_list.append(
                                     ' | '.join([X, Y, ''.join([v.surface for v in rel_ele.morphs])]))
                                 break

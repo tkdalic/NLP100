@@ -42,10 +42,10 @@ if __name__ == '__main__':
             v.pos for v in chunk.morphs}]
         has_rel = set()
         for xnoun in noun_list:
-            for relation in [v for v in relations if xnoun in v]:
-                rel = relation[relation.index(xnoun) + 1:]
-                X = Xword(xnoun)
-                for ynoun in noun_list[noun_list.index(xnoun) + 1:]:
+            X = Xword(xnoun)
+            for ynoun in noun_list[noun_list.index(xnoun) + 1:]:
+                for relation in [v for v in relations if xnoun in v]:
+                    rel = relation[relation.index(xnoun) + 1:]
                     if ynoun in rel and (xnoun, ynoun) not in has_rel:
                         has_rel.add((xnoun, ynoun))
                         if rel.index(ynoun) > 0:
