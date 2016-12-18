@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from nlp41 import chunks_list
 import re
+from collections import defaultdict
 
 
 def Xword(xnoun):
@@ -40,7 +41,7 @@ if __name__ == '__main__':
 
         noun_list = [chunk for chunk in chunks if '名詞' in {
             v.pos for v in chunk.morphs}]
-        least_list = []
+        least_dict = defaultdict(list)
         has_rel = set()
         for xnoun in noun_list:
             X = Xword(xnoun)
@@ -50,13 +51,14 @@ if __name__ == '__main__':
                     if ynoun in rel and (xnoun, ynoun) not in has_rel:
                         has_rel.add((xnoun, ynoun))
                         if rel.index(ynoun) > 0:
-                            least_list.append(' -> '.join([X, ' -> '.join([''.join(
+                            least_dict[relations.index(relation)].append(' -> '.join([X, ' -> '.join([''.join(
                                 [v2.surface for v2 in v.morphs]) for v in rel[:rel.index(ynoun)]]), 'Y']))
                         else:
-                            least_list.append(X + '-> Y')
+                            least_dict[relations.index(relation)].append(X + '-> Y')
                         break
-        if len(least_list) > 0:
-            leas = min({v.count(' -> ') for v in least_list})
-            for v in least_list:
-                if v.count(' -> ') == leas:
-                    print(v)
+        if len(least_dict) > 0:
+            for k, v in sorted(least_dict.items(), key=lambda x: x[0]):
+                leas = min({v2.count(' -> ') for v2 in v})
+                for v2 in v:
+                    if v2.count(' -> ') == leas:
+                        print(v2)

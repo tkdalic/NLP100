@@ -40,12 +40,10 @@ if __name__ == '__main__':
 
         noun_list = [chunk for chunk in chunks if '名詞' in {
             v.pos for v in chunk.morphs}]
-        has_rel = set()
         for xnoun in noun_list:
             for ynoun in noun_list[noun_list.index(xnoun) + 1:]:
                 for relation in [v for v in relations if ynoun not in v]:
-                    if xnoun in relation and (xnoun, ynoun) not in has_rel:
-                        has_rel.add((xnoun, ynoun))
+                    if xnoun in relation:
                         relation2 = [v for v in relations if ynoun in v][0]
                         for rel_ele in relation:
                             if rel_ele in relation2:

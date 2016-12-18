@@ -1,6 +1,7 @@
 #!/Users/rikutakada/.pyenv/shims python
 # -*- coding: utf-8 -*-
 from nlp41 import chunks_list
+from collections import defaultdict
 import re
 
 
@@ -40,13 +41,11 @@ if __name__ == '__main__':
 
         noun_list = [chunk for chunk in chunks if '名詞' in {
             v.pos for v in chunk.morphs}]
-        has_rel = set()
-        least_list = []
+        least_dict = defaultdict(list)
         for xnoun in noun_list:
             for ynoun in noun_list[noun_list.index(xnoun) + 1:]:
                 for relation in [v for v in relations if ynoun not in v]:
-                    if xnoun in relation and (xnoun, ynoun) not in has_rel:
-                        has_rel.add((xnoun, ynoun))
+                    if xnoun in relation:
                         relation2 = [v for v in relations if ynoun in v][0]
                         for rel_ele in relation:
                             if rel_ele in relation2:
@@ -60,12 +59,13 @@ if __name__ == '__main__':
                                 else:
                                     Y = word(ynoun, 'Y') + ' -> ' + ' -> '.join([''.join([v2.surface for v2 in v.morphs]) for v in relation2[
                                         relation2.index(ynoun) + 1:relation2.index(rel_ele)]])
-                                least_list.append(
+                                least_dict[chunks.index(rel_ele)].append(
                                     ' | '.join([X, Y, ''.join([v.surface for v in rel_ele.morphs])]))
                                 break
                         break
-        if len(least_list) > 0:
-            leas = min({v.count(' -> ') for v in least_list})
-            for v in least_list:
-                if v.count(' -> ') == leas:
-                    print(v)
+        if len(least_dict) > 0:
+            for k, v in sorted(least_dict.items(), key=lambda x: x[0]):
+                leas = min({v2.count(' -> ') for v2 in v})
+                for v2 in v:
+                    if v2.count(' -> ') == leas:
+                        print(v2)
