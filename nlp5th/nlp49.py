@@ -49,9 +49,9 @@ if __name__ == '__main__':
                         for rel_ele in relation:
                             if rel_ele in relation2:
                                 if relation.index(rel_ele) - relation.index(xnoun) <= 1:
-                                    X = word(xnoun, 'X')
+                                    X2 = X
                                 else:
-                                    X = word(xnoun, 'X') + ' -> ' + ' -> '.join([''.join([v2.surface for v2 in v.morphs]) for v in relation[
+                                    X2 = X + ' -> ' + ' -> '.join([''.join([v2.surface for v2 in v.morphs]) for v in relation[
                                         relation.index(xnoun) + 1:relation.index(rel_ele)]])
                                 if relation2.index(rel_ele) - relation2.index(ynoun) <= 1:
                                     Y = word(ynoun, 'Y')
@@ -59,16 +59,16 @@ if __name__ == '__main__':
                                     Y = word(ynoun, 'Y') + ' -> ' + ' -> '.join([''.join([v2.surface for v2 in v.morphs]) for v in relation2[
                                         relation2.index(ynoun) + 1:relation2.index(rel_ele)]])
                                 print(
-                                    ' | '.join([X, Y, ''.join([v.surface for v in rel_ele.morphs])]))
+                                    ' | '.join([X2, Y, ''.join([v.surface for v in rel_ele.morphs])]))
                                 break
                         break
                 else:
                     for relation in [v for v in relations if ynoun in v]:
-                        rel = relation[:relation.index(ynoun)-1]
-                        if xnoun in rel:
-                            if len(rel) - rel.index(xnoun) > 0:
-                                print(' -> '.join([X, ' -> '.join([''.join(
-                                    [v2.surface for v2 in v.morphs]) for v in rel[rel.index(xnoun):]]), 'Y']))
+                        if xnoun in relation:
+                            rel = relation[relation.index(
+                                xnoun) + 1:relation.index(ynoun)]
+                            if len(rel) > 0:
+                                print(' -> '.join([X, ' -> '.join([''.join([v2.surface for v2 in v.morphs]) for v in rel]), 'Y']))
                             else:
                                 print(X, '->', 'Y')
                             break
