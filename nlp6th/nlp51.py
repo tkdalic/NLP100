@@ -13,5 +13,6 @@ def parseWord(filename):
 if __name__ == '__main__':
     for v in parseWord('nlp.txt'):
         for v2 in v:
-            print(v2)
+            if v2 != '':
+                print(v2)
         print()

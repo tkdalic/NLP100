@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from nlp51 import parseWord
 import nltk
-# import re
+import re
 
 
 def word_stem(filename):
@@ -10,8 +10,8 @@ def word_stem(filename):
     for sentence in parseWord(filename):
         word_list = []
         for word in sentence:
-            # proto = re.sub('[,.:!\(\)]', '', word.lower())
-            word_list.append([word, nltk.PorterStemmer().stem(word)])
+            proto = re.sub('[^a-z]', '', word.lower())
+            word_list.append([proto, nltk.PorterStemmer().stem(proto)])
         sentence_list.append(word_list)
     return sentence_list
 

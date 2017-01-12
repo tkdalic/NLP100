@@ -24,5 +24,4 @@ def corenlp(filename):
 if __name__ == '__main__':
     for sentence in corenlp('nlp.txt.xml'):
         for token in sentence:
-            print(token['word'], end=' ')
-        print('')
+            print(token['word'])
