@@ -1,28 +1,60 @@
 #!/Users/rikutakada/.pyenv/shims python
 # -*- coding: utf-8 -*-
+from nlp53 import corenlp
 import re
 
 
-def corenlp(filename):
+def depnlp(filename):
     ans = []
     with open(filename) as f:
-        for sentence in re.findall('<sentence id[\s\S]+?</sentence>', f.read()):
-            sentence_list = []
-            for token in re.findall('<token id[\s\S]+?</token>', sentence):
-                token_dic = {}
-                id = re.search('"[0-9]+"', token).group()[1:-1]
-                token_dic['id'] = id
-                for tag in re.findall('<.+?>.*</.+?>', token):
-                    key = re.search('<.+?>', tag).group()[1:-1]
-                    val = re.search('>.+?<', tag).group()[1:-1]
-                    token_dic[key] = val
-                sentence_list.append(token_dic)
-            ans.append(sentence_list)
+        sentences = re.search(
+            '<sentence id[\s\S]+</sentence>', f.read()).group()
+        for token in re.findall('<coreference>[\s\S]+?</coreference>', sentences):
+
+            repre = re.search(
+                '<mention representative="true">[\s\S]+?</mention>', token)
+            rep_text = re.search(
+                '<text>.+</text>', repre.group()).group()[6:-7]
+
+            for dep in re.findall('<mention>.+[\s\S]+?</mention>', token):
+
+                sentence = re.search(
+                    '<sentence>[0-9]+</sentence>', dep).group()[10:-11]
+                start = re.search('<start>.*</start>', dep).group()[7:-8]
+                end = re.search('<end>.*</end>', dep).group()[5:-6]
+
+                ans.append(
+                    {'rep_text': rep_text,
+                     'sentence': int(sentence),
+                     'start': int(start),
+                     'end': int(end)})
     return ans
 
 
 if __name__ == '__main__':
-    for sentence in corenlp('nlp.txt.xml'):
-        for token in sentence:
-            print(token['word'], end=' ')
-        print('')
+    dep_list = depnlp('nlp.txt.xml')
+    end_list = []
+    sentences = []
+    for k, sentence in enumerate(corenlp('nlp.txt.xml')):
+        sentences.append('')
+        for k2, token in enumerate(sentence):
+            for dep in dep_list[:]:
+                if k + 1 == dep['sentence']:
+                    if k2 + 1 == dep['start']:
+                        sentences[-1] += '「' + \
+                            dep_list[dep_list.index(
+                                dep)]['rep_text'] + ' ('
+                        end_list.append(dep_list.pop(dep_list.index(dep)))
+
+            for end in end_list[:]:
+                if k + 1 == end['sentence']:
+                    if k2 + 1 == end['end']:
+                        sentences[-1] += ')」'
+                        end_list.pop(end_list.index(end))
+
+            sentences[-1] += token['word'] + ' '
+
+    for sentence in sentences:
+        re_sentence = sentence.strip().replace(' )」', '').replace(
+            ' .', '.').replace(' ,', ',').replace('-LRB- ', '(').replace(' -RRB-', ')')
+        print(re_sentence)

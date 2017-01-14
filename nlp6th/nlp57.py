@@ -9,7 +9,7 @@ def depnlp(filename):
     ans = []
     with open(filename) as f:
         for sentence in re.findall('<sentence id[\s\S]+?</sentence>', f.read()):
-            for token in re.findall('<collapsed-dependencies>[\s\S]+?</collapsed-dependencies>', sentence):
+            for token in re.findall('<dependencies type="collapsed-dependencies">[\s\S]+?</dependencies>', sentence):
                 dep_list = []
                 for dep in re.findall('<dep type=".+">[\s\S]+?</dep>', token):
 
@@ -18,9 +18,9 @@ def depnlp(filename):
                     depen = re.search('<depen.*>', dep).group()
 
                     gover_num = re.search(
-                        '<governor idx="[0-9]+">', gover).group()[15:-2]
+                        '<governor idx="[0-9]+".*?>', gover).group()[15:-2]
                     depen_num = re.search(
-                        '<dependent idx="[0-9]+">', depen).group()[16:-2]
+                        '<dependent idx="[0-9]+".*?>', depen).group()[16:-2]
 
                     gover_word = re.sub('<.*?>', '', gover)
                     depen_word = re.sub('<.*?>', '', depen)

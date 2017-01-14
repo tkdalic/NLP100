@@ -11,7 +11,7 @@ def word_stem(filename):
         word_list = []
         for word in sentence:
             proto = re.sub('[^a-z]', '', word.lower())
-            word_list.append([proto, nltk.PorterStemmer().stem(proto)])
+            word_list.append([word, nltk.PorterStemmer().stem(proto)])
         sentence_list.append(word_list)
     return sentence_list
 
