@@ -43,7 +43,12 @@ if __name__ == '__main__':
     G = Digraph(format='png')
     G.attr('node', shape='circle')
 
-    for dep in depnlp('nlp.txt.xml')[n]:
-        G.edge(dep['gover_word'], dep['depen_word'])
+    dep_list = depnlp('nlp.txt.xml')[n]
+    for dep in dep_list:
+        G.node(dep['gover_num'], dep['gover_word'])
+        G.node(dep['depen_num'], dep['depen_word'])
+
+    for dep in dep_list:
+        G.edge(dep['depen_num'], dep['gover_num'], dep['type'])
 
     G.render('dotnlp')

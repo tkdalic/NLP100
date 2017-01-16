@@ -4,7 +4,7 @@ import re
 
 
 def nest_match(sentence):
-    nest = 1
+    nest = 0
     for k, char in enumerate(sentence):
         if char == '(':
             nest += 1

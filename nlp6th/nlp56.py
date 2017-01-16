@@ -7,8 +7,7 @@ import re
 def depnlp(filename):
     ans = []
     with open(filename) as f:
-        sentences = re.search(
-            '<sentence id[\s\S]+</sentence>', f.read()).group()
+        sentences = re.search('<coreference>[\s\S]+</coreference>', f.read()).group()
         for token in re.findall('<coreference>[\s\S]+?</coreference>', sentences):
 
             repre = re.search(
@@ -16,7 +15,7 @@ def depnlp(filename):
             rep_text = re.search(
                 '<text>.+</text>', repre.group()).group()[6:-7]
 
-            for dep in re.findall('<mention>.+[\s\S]+?</mention>', token):
+            for dep in re.findall('<mention>[\s\S]+?</mention>', token):
 
                 sentence = re.search(
                     '<sentence>[0-9]+</sentence>', dep).group()[10:-11]
@@ -28,7 +27,7 @@ def depnlp(filename):
                      'sentence': int(sentence),
                      'start': int(start),
                      'end': int(end)})
-    return ans
+    return sorted(ans, key=lambda x: (x['sentence'], x['start'], x['end']))
 
 
 if __name__ == '__main__':
@@ -41,20 +40,20 @@ if __name__ == '__main__':
             for dep in dep_list[:]:
                 if k + 1 == dep['sentence']:
                     if k2 + 1 == dep['start']:
-                        sentences[-1] += '「' + \
+                        sentences[-1] += '「 ' + \
                             dep_list[dep_list.index(
-                                dep)]['rep_text'] + ' ('
+                                dep)]['rep_text'] + ' ( '
                         end_list.append(dep_list.pop(dep_list.index(dep)))
 
             for end in end_list[:]:
                 if k + 1 == end['sentence']:
                     if k2 + 1 == end['end']:
-                        sentences[-1] += ')」'
+                        sentences[-1] += ')」 '
                         end_list.pop(end_list.index(end))
 
             sentences[-1] += token['word'] + ' '
 
     for sentence in sentences:
-        re_sentence = sentence.strip().replace(' )」', '').replace(
-            ' .', '.').replace(' ,', ',').replace('-LRB- ', '(').replace(' -RRB-', ')')
+        re_sentence = sentence.strip().replace(' ?', '?').replace(
+            ' .', '.').replace(' ,', ',').replace(' :', ':').replace('-LRB- ', '(').replace(' -RRB-', ')')
         print(re_sentence)

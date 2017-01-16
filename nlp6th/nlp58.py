@@ -14,5 +14,5 @@ if __name__ == '__main__':
                 dob_list.append(dep)
         for nsu, dob in product(nsu_list, dob_list):
             if nsu['gover_num'] == dob['gover_num']:
-                print('{0}\t{1}\t{2}\t'.format(
-                    nsu['gover_word'], nsu['depen_word'], dob['depen_word']))
+                print('{0}\t{1}\t{2}'.format(
+                    nsu['depen_word'], nsu['gover_word'], dob['depen_word']))
